@@ -5,7 +5,7 @@ import json
 import time
 import easygui as box
 pg.init()
-print("1")
+print("1, imports")
 
 
 #Setups
