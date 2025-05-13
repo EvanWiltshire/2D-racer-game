@@ -17,7 +17,11 @@ quitgame = False
 scrnX = 1280
 scrnY = 300
 fps = 60
-print("2.1, constants")
+print("2.1.1, non-lane constants")
+#lanes/barriers (still constants)
+topbarrier = [(0,0), (1280, 0), (1280, 10), (0, 10)]
+bottombarrier = [(0, 290), (1280, 290), (1280, 300), (0, 300)]
+print("2.1.2, lane constants")
 #The screen display
 screen = pg.display.set_mode((scrnX, scrnY),pg.RESIZABLE)
 print("2.2, screen display")
@@ -38,6 +42,18 @@ roadcolours = {
     "fog":{"car":(42, 15, 16), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
     "jank":{"car":(255, 100, 100), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
+
+
+#Setting up the class for displaying the lanes and the lines on the road.
+class Lanes:
+    def __init__(self, coords):
+        self.coords = coords
+
+    def drawlanes(self, coords, colour):
+        pg.draw.polygon(screen, colour, self.coords)
+
+upperbarrier = Lanes(topbarrier)
+lowerbarrier = Lanes(bottombarrier)
 
 
 #Difficulty and theme selection using pygame
@@ -78,6 +94,7 @@ while not quitgame:
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["barrier"])
 
+    upperbarrier.drawlanes(screen, colour=(theme["lane"]))
 
     pg.display.update()
 
