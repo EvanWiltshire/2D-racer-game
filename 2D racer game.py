@@ -26,6 +26,11 @@ divider1 = [(0,70), (1280,70), (1280,90), (0,90)]
 divider2 = [(0,140), (1280,140), (1280,160), (0,160)]
 divider3 = [(0,210), (1280,210), (1280,230), (0,230)]
 print("2.1.2, lane constants")
+#Car initial values
+topcar = [(1210,23), (1280, 23), (1280, 67), (1210, 67)]
+umcar = [(1210,93), (1280, 93), (1280, 137), (1210, 137)]
+lmcar = [(1210,163), (1280, 163), (1280, 207), (1210, 207)]
+bottomcar = [(1210,233), (1280, 233), (1280, 277), (1210, 277)]
 #The screen display
 screen = pg.display.set_mode((scrnX, scrnY),pg.RESIZABLE)
 print("2.2, screen display")
@@ -49,22 +54,26 @@ roadcolours = {
 
 
 #Setting up the class for displaying the lanes and the lines on the road.
-class Lanes:
+class Objects:
     def __init__(self, coords):
         self.coords = coords
 
-    def drawlanes(self, coords, colour):
+    def drawobjects(self, coords, colour):
         pg.draw.polygon(screen, colour, self.coords)
 
-upperbarrier = Lanes(topbarrier)
-lowerbarrier = Lanes(bottombarrier)
-line1 = Lanes(divider1)
-line2 = Lanes(divider2)
-line3 = Lanes(divider3)
+upperbarrier = Objects(topbarrier)
+lowerbarrier = Objects(bottombarrier)
+line1 = Objects(divider1)
+line2 = Objects(divider2)
+line3 = Objects(divider3)
+car1 = Objects(topcar)
+car2 = Objects(umcar)
+car3 = Objects(lmcar)
+car4 = Objects(bottomcar)
 
 barriers=[upperbarrier, lowerbarrier]
-lines=[line1, line2, line3]
-
+roadlines=[line1, line2, line3]
+cars = [car1, car2, car3, car4]
 
 
 #Difficulty and theme selection using pygame
@@ -107,9 +116,11 @@ while not quitgame:
     screen.fill(theme["lane"])
 
     for x in barriers:
-        x.drawlanes(screen, colour=(theme["barrier"]))
-    for x in lines:
-        x.drawlanes(screen, colour= (theme["lines"]))
+        x.drawobjects(screen, colour=(theme["barrier"]))
+    for x in roadlines:
+        x.drawobjects(screen, colour=(theme["lines"]))
+    for x in cars:
+        x.drawobjects(screen, colour=(theme["car"]))
 
     pg.display.update()
 
