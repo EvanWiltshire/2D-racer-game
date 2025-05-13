@@ -13,14 +13,18 @@ print("1")
 speedmod = 1
 name = "Johnus"
 quitgame = False
+road = None
 #Constants
 scrnX = 1280
 scrnY = 300
 fps = 60
 print("2.1.1, non-lane constants")
 #lanes/barriers (still constants)
-topbarrier = [(0,0), (1280, 0), (1280, 10), (0, 10)]
-bottombarrier = [(0, 290), (1280, 290), (1280, 300), (0, 300)]
+topbarrier = [(0,0), (1280, 0), (1280, 20), (0, 20)]
+bottombarrier = [(0, 280), (1280, 280), (1280, 300), (0, 300)]
+divider1 = [(0,70), (1280,70), (1280,90), (0,90)]
+divider2 = [(0,140), (1280,140), (1280,160), (0,160)]
+divider3 = [(0,210), (1280,210), (1280,230), (0,230)]
 print("2.1.2, lane constants")
 #The screen display
 screen = pg.display.set_mode((scrnX, scrnY),pg.RESIZABLE)
@@ -54,6 +58,13 @@ class Lanes:
 
 upperbarrier = Lanes(topbarrier)
 lowerbarrier = Lanes(bottombarrier)
+line1 = Lanes(divider1)
+line2 = Lanes(divider2)
+line3 = Lanes(divider3)
+
+barriers=[upperbarrier, lowerbarrier]
+lines=[line1, line2, line3]
+
 
 
 #Difficulty and theme selection using pygame
@@ -69,6 +80,7 @@ elif diff == "medium":
 elif diff == "hard":
     speedmod = 1.5
 print("4.2, difficulty chosen")
+
 #Setting the theme based on selections
 if diff == "hard" and name == "Sully":
     theme = roadcolours["jank"]
@@ -92,9 +104,12 @@ while not quitgame:
             quitgame = True
 
     #Displaying the screen, road lanes, barriers
-    screen.fill(theme["barrier"])
+    screen.fill(theme["lane"])
 
-    upperbarrier.drawlanes(screen, colour=(theme["lane"]))
+    for x in barriers:
+        x.drawlanes(screen, colour=(theme["barrier"]))
+    for x in lines:
+        x.drawlanes(screen, colour= (theme["lines"]))
 
     pg.display.update()
 
