@@ -18,6 +18,10 @@ road = None
 scrnX = 1280
 scrnY = 300
 fps = 60
+topcarX = 0
+umcarX = 0
+lmcarX = 0
+bottomcarX = 0
 print("2.1.1, non-lane constants")
 #lanes/barriers (still constants)
 topbarrier = [(0,0), (1280, 0), (1280, 20), (0, 20)]
@@ -27,10 +31,6 @@ divider2 = [(0,140), (1280,140), (1280,160), (0,160)]
 divider3 = [(0,210), (1280,210), (1280,230), (0,230)]
 print("2.1.2, lane constants")
 #Car initial values
-topcar = [(1210,23), (1280, 23), (1280, 67), (1210, 67)]
-umcar = [(1210,93), (1280, 93), (1280, 137), (1210, 137)]
-lmcar = [(1210,163), (1280, 163), (1280, 207), (1210, 207)]
-bottomcar = [(1210,233), (1280, 233), (1280, 277), (1210, 277)]
 #The screen display
 screen = pg.display.set_mode((scrnX, scrnY),pg.RESIZABLE)
 print("2.2, screen display")
@@ -66,14 +66,14 @@ lowerbarrier = Objects(bottombarrier)
 line1 = Objects(divider1)
 line2 = Objects(divider2)
 line3 = Objects(divider3)
-car1 = Objects(topcar)
-car2 = Objects(umcar)
-car3 = Objects(lmcar)
-car4 = Objects(bottomcar)
+topcar = Objects([((1210-topcarX),23), ((1280-topcarX), 23), ((1280-topcarX), 67), ((1210-topcarX), 67)])
+umcar = Objects([((1210-umcarX),93), ((1280-umcarX), 93), ((1280-umcarX), 137), ((1210-umcarX), 137)])
+lmcar = Objects([((1210-lmcarX),163), ((1280-lmcarX), 163), ((1280-lmcarX), 207), ((1210-lmcarX), 207)])
+bottomcar = Objects([((1210-bottomcarX),233), ((1280-bottomcarX), 233), ((1280-bottomcarX), 277), ((1210-bottomcarX), 277)])
 
-barriers=[upperbarrier, lowerbarrier]
-roadlines=[line1, line2, line3]
-cars = [car1, car2, car3, car4]
+barriers = [upperbarrier, lowerbarrier]
+roadlines = [line1, line2, line3]
+cars = [topcar, umcar, lmcar, bottomcar]
 
 
 #Difficulty and theme selection using pygame
@@ -121,6 +121,12 @@ while not quitgame:
         x.drawobjects(screen, colour=(theme["lines"]))
     for x in cars:
         x.drawobjects(screen, colour=(theme["car"]))
+
+    topcarX = (topcarX + speedmod*2)
+    umcarX = (umcarX + speedmod*4)
+    lmcarX = (lmcarX + speedmod*6)
+    bottomcarX = (bottomcarX + speedmod*8)
+    cars.update(topcarX)
 
     pg.display.update()
 
