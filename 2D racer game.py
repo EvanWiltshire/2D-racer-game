@@ -14,23 +14,27 @@ speedmod = 1
 name = "Johnus"
 quitgame = False
 road = None
-#Constants
-scrnX = 1280
-scrnY = 300
-fps = 60
 topcarX = 0
 umcarX = 0
 lmcarX = 0
 bottomcarX = 0
+newtopX = 0
+newumX = 0
+newlmX = 0
+newbottomX = 0
+#Constants
+scrnX = 1280
+scrnY = 300
+fps = 60
 print("2.1.1, non-lane constants")
 #lanes/barriers (still constants)
-topbarrier = [(0,0), (1280, 0), (1280, 20), (0, 20)]
-bottombarrier = [(0, 280), (1280, 280), (1280, 300), (0, 300)]
-divider1 = [(0,70), (1280,70), (1280,90), (0,90)]
-divider2 = [(0,140), (1280,140), (1280,160), (0,160)]
-divider3 = [(0,210), (1280,210), (1280,230), (0,230)]
+topbarrier = [0, 1820, 0, 20]
+bottombarrier = [0, 1280, 280, 300]
+divider1 = [0, 1280, 70, 90]
+divider2 = [0, 1270, 140, 160]
+divider3 = [0, 1280, 210, 230]
 print("2.1.2, lane constants")
-#Car initial values
+#Initial values
 #The screen display
 screen = pg.display.set_mode((scrnX, scrnY),pg.RESIZABLE)
 print("2.2, screen display")
@@ -42,6 +46,11 @@ gameicon = pg.image.load('amogusicon.png')
 pg.display.set_icon(gameicon)
 pg.display.set_caption("It's like a real freeway")
 print("2.4, displayed info")
+#The car hitboxes
+car1 = [1210, 1280, 23, 67]
+car2 = [1210, 1280, 93, 137]
+car3 = [1210, 1280, 163, 207]
+car4 = [1210, 1280, 233, 277]
 
 
 #Road themes
@@ -59,17 +68,18 @@ class Objects:
         self.coords = coords
 
     def drawobjects(self, coords, colour):
-        pg.draw.polygon(screen, colour, self.coords)
+        pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
+            (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3])))
 
 upperbarrier = Objects(topbarrier)
 lowerbarrier = Objects(bottombarrier)
 line1 = Objects(divider1)
 line2 = Objects(divider2)
 line3 = Objects(divider3)
-topcar = Objects([((1210-topcarX),23), ((1280-topcarX), 23), ((1280-topcarX), 67), ((1210-topcarX), 67)])
-umcar = Objects([((1210-umcarX),93), ((1280-umcarX), 93), ((1280-umcarX), 137), ((1210-umcarX), 137)])
-lmcar = Objects([((1210-lmcarX),163), ((1280-lmcarX), 163), ((1280-lmcarX), 207), ((1210-lmcarX), 207)])
-bottomcar = Objects([((1210-bottomcarX),233), ((1280-bottomcarX), 233), ((1280-bottomcarX), 277), ((1210-bottomcarX), 277)])
+topcar = Objects(car1)
+umcar = Objects(car2)
+lmcar = Objects(car3)
+bottomcar = Objects(car4)
 
 barriers = [upperbarrier, lowerbarrier]
 roadlines = [line1, line2, line3]
@@ -122,12 +132,13 @@ while not quitgame:
     for x in cars:
         x.drawobjects(screen, colour=(theme["car"]))
 
-    topcarX = (topcarX + speedmod*2)
-    umcarX = (umcarX + speedmod*4)
-    lmcarX = (lmcarX + speedmod*6)
-    bottomcarX = (bottomcarX + speedmod*8)
-    cars.update(topcarX)
 
-    pg.display.update()
+    car1[0] -= (speedmod * 2)
+    car1[1] -= (speedmod *2)
+    print(car1[0], car1[1])
+    if car1[1] <= 0:
+        car1[0] = 1280
+        car1[1] = 1350
 
     clock.tick(fps)
+    pg.display.update()
