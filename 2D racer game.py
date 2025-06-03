@@ -48,7 +48,8 @@ pg.display.set_icon(gameicon)
 pg.display.set_caption("It's like a real freeway")
 print("2.4, displayed info")
 #The car hitboxes
-car1 = [1210, 1280, 23, 67]
+cartop1 = [1210, 1280, 23, 67]
+cartop2 = [1850, 1920, 23, 67]
 car2 = [1210, 1280, 93, 137]
 car3 = [1210, 1280, 163, 207]
 car4 = [1210, 1280, 233, 277]
@@ -77,14 +78,15 @@ lowerbarrier = Objects(bottombarrier)
 line1 = Objects(divider1)
 line2 = Objects(divider2)
 line3 = Objects(divider3)
-topcar = Objects(car1)
+topcar1 = Objects(cartop1)
+topcar2 = Objects(cartop2)
 umcar = Objects(car2)
 lmcar = Objects(car3)
 bottomcar = Objects(car4)
 
 barriers = [upperbarrier, lowerbarrier]
 roadlines = [line1, line2, line3]
-cars = [topcar, umcar, lmcar, bottomcar]
+cars = [topcar1, topcar2, umcar, lmcar, bottomcar]
 
 
 #Difficulty and theme selection using pygame
@@ -134,8 +136,10 @@ while not quitgame:
         x.drawobjects(screen, colour=(theme["car"]))
 
 
-    car1[0] -= (speedmod * 2)
-    car1[1] -= (speedmod *2)
+    cartop1[0] -= (speedmod * 2)
+    cartop1[1] -= (speedmod *2)
+    cartop2[0] -= (speedmod * 2)
+    cartop2[1] -= (speedmod *2)
     car2[0] -= (speedmod * 4)
     car2[1] -= (speedmod *4)
     car3[0] -= (speedmod * 6)
@@ -143,14 +147,16 @@ while not quitgame:
     car4[0] -= (speedmod * 8)
     car4[1] -= (speedmod *8)
 
-    print(car1[0], car1[1])
+    print(cartop1[0], cartop1[1])
     car2rand = (rndm.randint(5, 30)*2)
     car3rand = (rndm.randint(5, 30)*2)
     car4rand = (rndm.randint(5, 30)*2)
-    if car1[1] <= 0:
-        car1rand = (rndm.randint(5, 30)*10)
-        car1[0] = 1280+car1rand
-        car1[1] = 1350+car1rand
+    if cartop1[1] <= 0:
+        car1[0] = 1280
+        car1[1] = 1350
+    if cartop2[1] <= 0:
+        car1[0] = 1280
+        car1[1] = 1350
     if car2[1] <= 0:
         car2rand = (rndm.randint(10, 40)*10)
         car2[0] = 1280+car2rand
