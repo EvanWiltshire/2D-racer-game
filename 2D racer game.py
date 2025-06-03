@@ -4,6 +4,7 @@ import math as mths
 import json
 import time
 import easygui as box
+import random as rndm
 pg.init()
 print("1")
 
@@ -31,7 +32,7 @@ print("2.1.1, non-lane constants")
 topbarrier = [0, 1820, 0, 20]
 bottombarrier = [0, 1280, 280, 300]
 divider1 = [0, 1280, 70, 90]
-divider2 = [0, 1270, 140, 160]
+divider2 = [0, 1280, 140, 160]
 divider3 = [0, 1280, 210, 230]
 print("2.1.2, lane constants")
 #Initial values
@@ -135,10 +136,33 @@ while not quitgame:
 
     car1[0] -= (speedmod * 2)
     car1[1] -= (speedmod *2)
+    car2[0] -= (speedmod * 4)
+    car2[1] -= (speedmod *4)
+    car3[0] -= (speedmod * 6)
+    car3[1] -= (speedmod *6)
+    car4[0] -= (speedmod * 8)
+    car4[1] -= (speedmod *8)
+
     print(car1[0], car1[1])
+    car2rand = (rndm.randint(5, 30)*2)
+    car3rand = (rndm.randint(5, 30)*2)
+    car4rand = (rndm.randint(5, 30)*2)
     if car1[1] <= 0:
-        car1[0] = 1280
-        car1[1] = 1350
+        car1rand = (rndm.randint(5, 30)*10)
+        car1[0] = 1280+car1rand
+        car1[1] = 1350+car1rand
+    if car2[1] <= 0:
+        car2rand = (rndm.randint(5, 30)*10)
+        car2[0] = 1280+car2rand
+        car2[1] = 1350+car2rand
+    if car3[1] <= 0:
+        car3rand = (rndm.randint(5, 30)*10)
+        car3[0] = 1280+car3rand
+        car3[1] = 1350+car3rand
+    if car4[1] <= 0:
+        car4rand = (rndm.randint(5, 30)*10)
+        car4[0] = 1280+car4rand
+        car4[1] = 1350+car4rand
 
     clock.tick(fps)
     pg.display.update()
