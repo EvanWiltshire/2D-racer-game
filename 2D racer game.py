@@ -152,15 +152,15 @@ while not quitgame:
         car1[0] = 1280+car1rand
         car1[1] = 1350+car1rand
     if car2[1] <= 0:
-        car2rand = (rndm.randint(5, 30)*10)
+        car2rand = (rndm.randint(10, 40)*10)
         car2[0] = 1280+car2rand
         car2[1] = 1350+car2rand
     if car3[1] <= 0:
-        car3rand = (rndm.randint(5, 30)*10)
+        car3rand = (rndm.randint(15, 50)*10)
         car3[0] = 1280+car3rand
         car3[1] = 1350+car3rand
     if car4[1] <= 0:
-        car4rand = (rndm.randint(5, 30)*10)
+        car4rand = (rndm.randint(20, 60)*10)
         car4[0] = 1280+car4rand
         car4[1] = 1350+car4rand
 
