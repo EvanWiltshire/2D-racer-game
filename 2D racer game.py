@@ -14,7 +14,6 @@ print("1")
 speedmod = 1
 name = "Johnus"
 quitgame = False
-road = None
 topcarX = 0
 umcarX = 0
 lmcarX = 0
@@ -53,6 +52,7 @@ cartop2 = [1850, 1920, 23, 67]
 car2 = [1210, 1280, 93, 137]
 car3 = [1210, 1280, 163, 207]
 car4 = [1210, 1280, 233, 277]
+pcar = [10, 80, 23, 67]
 
 
 #Road themes
@@ -62,6 +62,8 @@ roadcolours = {
     "fog":{"car":(42, 15, 16), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
     "jank":{"car":(255, 100, 100), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
+#default
+theme = roadcolours["day"]
 
 
 #Setting up the class for displaying the lanes and the lines on the road.
@@ -83,6 +85,7 @@ topcar2 = Objects(cartop2)
 umcar = Objects(car2)
 lmcar = Objects(car3)
 bottomcar = Objects(car4)
+playercar = Objects(pcar)
 
 barriers = [upperbarrier, lowerbarrier]
 roadlines = [line1, line2, line3]
@@ -133,6 +136,8 @@ while not quitgame:
     for x in roadlines:
         x.drawobjects(screen, colour=(theme["lines"]))
     for x in cars:
+        x.drawobjects(screen, colour=(theme["car"]))
+    for x in playercar:
         x.drawobjects(screen, colour=(theme["car"]))
 
 
