@@ -148,15 +148,12 @@ while not quitgame:
     car4[1] -= (speedmod *8)
 
     print(cartop1[0], cartop1[1])
-    car2rand = (rndm.randint(5, 30)*2)
-    car3rand = (rndm.randint(5, 30)*2)
-    car4rand = (rndm.randint(5, 30)*2)
     if cartop1[1] <= 0:
-        car1[0] = 1280
-        car1[1] = 1350
+        cartop1[0] = 1280
+        cartop1[1] = 1350
     if cartop2[1] <= 0:
-        car1[0] = 1280
-        car1[1] = 1350
+        cartop2[0] = 1280
+        cartop2[1] = 1350
     if car2[1] <= 0:
         car2rand = (rndm.randint(10, 40)*10)
         car2[0] = 1280+car2rand
