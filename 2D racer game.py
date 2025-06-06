@@ -26,6 +26,10 @@ newbottomX = 0
 scrnX = 1280
 scrnY = 300
 fps = 60
+moveleft = False
+moveright = False
+movedown = False
+moveup = False
 print("2.1.1, non-lane constants")
 #lanes/barriers (still constants)
 topbarrier = [0, 1820, 0, 20]
@@ -62,7 +66,7 @@ roadcolours = {
     "fog":{"car":(42, 15, 16), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
     "jank":{"car":(255, 100, 100), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
-#default
+#default theme
 theme = roadcolours["day"]
 
 
@@ -90,6 +94,7 @@ playercar = Objects(pcar)
 barriers = [upperbarrier, lowerbarrier]
 roadlines = [line1, line2, line3]
 cars = [topcar1, topcar2, umcar, lmcar, bottomcar]
+player = [playercar]
 
 
 #Difficulty and theme selection using pygame
@@ -128,19 +133,39 @@ while not quitgame:
         if event.type == pg.QUIT:
             quitgame = True
 
+        #Player input detection
+        if event.type == pg.K_LEFT:
+            moveleft = True
+        if event.type == pg.K_RIGHT:
+            moveright = True
+        if event.type == pg.K_DOWN:
+            movedown = True
+        if event.type == pg.K_UP:
+            moveup = True
+
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
-
     for x in barriers:
         x.drawobjects(screen, colour=(theme["barrier"]))
     for x in roadlines:
         x.drawobjects(screen, colour=(theme["lines"]))
     for x in cars:
         x.drawobjects(screen, colour=(theme["car"]))
-    for x in playercar:
+    for x in player:
         x.drawobjects(screen, colour=(theme["car"]))
 
-
+    if moveleft == True:
+        pcar[0] -= 2
+        pcar[1] -= 2
+    if moveright == True:
+        pcar[0] += 2
+        pcar[1] += 2
+    if moveup == True:
+        pcar[2] -= 5
+        pcar[3] -= 5
+    if movedown == True:
+        pcar[2] += 5
+        pcar[3] += 5
     cartop1[0] -= (speedmod * 2)
     cartop1[1] -= (speedmod *2)
     cartop2[0] -= (speedmod * 2)
@@ -152,7 +177,6 @@ while not quitgame:
     car4[0] -= (speedmod * 8)
     car4[1] -= (speedmod *8)
 
-    print(cartop1[0], cartop1[1])
     if cartop1[1] <= 0:
         cartop1[0] = 1280
         cartop1[1] = 1350
