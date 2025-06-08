@@ -134,14 +134,15 @@ while not quitgame:
             quitgame = True
 
         #Player input detection
-        if event.type == pg.K_LEFT:
-            moveleft = True
-        if event.type == pg.K_RIGHT:
-            moveright = True
-        if event.type == pg.K_DOWN:
-            movedown = True
-        if event.type == pg.K_UP:
-            moveup = True
+        if event.type == pg.KEYDOWN:
+            if event.type == pg.K_LEFT:
+                moveleft = True
+            if event.type == pg.K_RIGHT:
+                moveright = True
+            if event.type == pg.K_DOWN:
+                movedown = True
+            if event.type == pg.K_UP:
+                moveup = True
 
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
