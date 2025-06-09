@@ -166,17 +166,17 @@ while not quitgame:
         x.drawobjects(screen, colour=(theme["car"]))
 
     if moveleft == True:
-        pcar[0] -= 2
-        pcar[1] -= 2
+        pcar[0] -= 1
+        pcar[1] -= 1
     if moveright == True:
-        pcar[0] += 2
-        pcar[1] += 2
+        pcar[0] += 1
+        pcar[1] += 1
     if moveup == True:
-        pcar[2] -= 5
-        pcar[3] -= 5
+        pcar[2] -= 3
+        pcar[3] -= 3
     if movedown == True:
-        pcar[2] += 5
-        pcar[3] += 5
+        pcar[2] += 3
+        pcar[3] += 3
     cartop1[0] -= (speedmod * 2)
     cartop1[1] -= (speedmod *2)
     cartop2[0] -= (speedmod * 2)
