@@ -171,10 +171,10 @@ while not quitgame:
     if moveright == True:
         pcar[0] += 1
         pcar[1] += 1
-    if moveup == True:
+    if moveup == True and pcar[2] > 23:
         pcar[2] -= 3
         pcar[3] -= 3
-    if movedown == True:
+    if movedown == True and pcar[3] < 277:
         pcar[2] += 3
         pcar[3] += 3
     cartop1[0] -= (speedmod * 2)
