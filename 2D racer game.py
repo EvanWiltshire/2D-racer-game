@@ -220,7 +220,7 @@ while not quitgame:
         car4[1] = 1350+car4rand
     
     for x in cars:
-        x.collcheck()
+        x.collcheck(pcar)
 
     clock.tick(fps)
     pg.display.update()
