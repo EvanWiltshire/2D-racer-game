@@ -8,20 +8,6 @@ import random as rndm
 pg.init()
 print("1")
 
-
-#Setups
-#Base variable values to prevent breaking
-speedmod = 1
-name = "Johnus"
-quitgame = False
-topcarX = 0
-umcarX = 0
-lmcarX = 0
-bottomcarX = 0
-newtopX = 0
-newumX = 0
-newlmX = 0
-newbottomX = 0
 #Constants
 scrnX = 1280
 scrnY = 300
@@ -30,35 +16,25 @@ moveleft = False
 moveright = False
 movedown = False
 moveup = False
-print("2.1.1, non-lane constants")
-#lanes/barriers (still constants)
+print("2.1, non-lane constants")
+#The screen display
+screen = pg.display.set_mode((scrnX, scrnY),pg.RESIZABLE)
+print("2.2, screen display")
+#lanes/barriers (constants)
 topbarrier = [0, 1820, 0, 20]
 bottombarrier = [0, 1280, 280, 300]
 divider1 = [0, 1280, 70, 90]
 divider2 = [0, 1280, 140, 160]
 divider3 = [0, 1280, 210, 230]
-print("2.1.2, lane constants")
-#Initial values
-#The screen display
-screen = pg.display.set_mode((scrnX, scrnY),pg.RESIZABLE)
-print("2.2, screen display")
+print("2.3, lane constants")
 #The clock for counting the fps
 clock = pg.time.Clock()
-print("2.3, clock")
+print("2.4, clock")
 #The external display (image, game name)
 gameicon = pg.image.load('amogusicon.png')
 pg.display.set_icon(gameicon)
 pg.display.set_caption("It's like a real freeway")
-print("2.4, displayed info")
-#The car hitboxes
-cartop1 = [1210, 1280, 23, 67]
-cartop2 = [1850, 1920, 23, 67]
-car2 = [1210, 1280, 93, 137]
-car3 = [1210, 1280, 163, 207]
-car4 = [1210, 1280, 233, 277]
-pcar = [10, 80, 23, 67]
-
-
+print("2.5, displayed info")
 #Road themes
 roadcolours = {
     "day":{"car":(190, 66, 72), "lane":(30, 30, 30), "barrier":(200, 200, 200), "lines":(255, 255, 255)},
@@ -66,19 +42,52 @@ roadcolours = {
     "fog":{"car":(42, 15, 16), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
     "jank":{"car":(255, 100, 100), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
-#default theme
-theme = roadcolours["day"]
+print("2.6, colour themes")
 
 
-#Setting up the class for displaying the lanes and the lines on the road.
+#Variables
+#Base variable values
+speedmod = 1 #Default speed
+name = "Johnus" #Default name
+theme = roadcolours["day"] #Default theme
+quitgame = False
+debug = False
+topcarX = 0
+umcarX = 0
+lmcarX = 0
+bottomcarX = 0
+newtopX = 0
+newumX = 0
+newlmX = 0
+newbottomX = 0
+print("3.1, initial variables")
+#The car hitboxes
+cartop1 = [1210, 1280, 23, 67]
+cartop2 = [1850, 1920, 23, 67]
+car2 = [1210, 1280, 93, 137]
+car3 = [1210, 1280, 163, 207]
+car4 = [1210, 1280, 233, 277]
+pcar = [10, 80, 23, 67]
+print("3.2, the cars' hitboxes' initial values")
+
+
+#The class for displaying the lanes and the lines on the road.
 class Objects:
+    #Initialises the class
     def __init__(self, coords):
         self.coords = coords
 
+    #Draws the cars' hitboxes
     def drawobjects(self, coords, colour):
         pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
             (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3])))
+        
+    #Collision detection
+    def collcheck(self, coords):
+        if pcar[0] <= self.coords[0] and pcar [1] >= self.coords[0]:
+            print("colled")
 
+#Allowing the variables for the cars, lanes, barriers, to be read as Objects
 upperbarrier = Objects(topbarrier)
 lowerbarrier = Objects(bottombarrier)
 line1 = Objects(divider1)
@@ -90,14 +99,14 @@ umcar = Objects(car2)
 lmcar = Objects(car3)
 bottomcar = Objects(car4)
 playercar = Objects(pcar)
-
+#Grouping the objects to have them separate for drawing/collision checking
 barriers = [upperbarrier, lowerbarrier]
 roadlines = [line1, line2, line3]
 cars = [topcar1, topcar2, umcar, lmcar, bottomcar]
 player = [playercar]
 
 
-#Difficulty and theme selection using pygame
+#Difficulty and theme selection using easygui
 name = box.enterbox(msg="What is your name?", title="player name selection")
 diff = box.choicebox(msg="Please pick your preferred difficulty (higher difficulties gain more points)",\
     title="Difficulty selection", choices=["easy", "medium", "hard"])
@@ -111,9 +120,11 @@ elif diff == "hard":
     speedmod = 1.5
 print("4.2, difficulty chosen")
 
-#Setting the theme based on selections
+#Setting the theme based on selected theme
+#"Sully" with "Hard" sets the debug mode
 if diff == "hard" and name == "Sully":
     theme = roadcolours["jank"]
+    debug = True
 else:
     conditions = box.choicebox(msg="What driving conditions do you want to try?", title="road selection",\
     choices=["daytime", "nighttime", "foggy"])
@@ -165,6 +176,7 @@ while not quitgame:
     for x in player:
         x.drawobjects(screen, colour=(theme["car"]))
 
+    #Moving the player car based on input
     if moveleft == True:
         pcar[0] -= 1
         pcar[1] -= 1
@@ -206,6 +218,9 @@ while not quitgame:
         car4rand = (rndm.randint(20, 60)*10)
         car4[0] = 1280+car4rand
         car4[1] = 1350+car4rand
+    
+    for x in cars:
+        x.collcheck()
 
     clock.tick(fps)
     pg.display.update()
