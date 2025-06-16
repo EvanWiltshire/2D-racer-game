@@ -89,14 +89,22 @@ class Objects:
     def collcheck(self, coords):
         Xcoll = False
         Ycoll = False
-        if pcar[0] <= self.coords[0] and pcar [1] >= self.coords[0]:
+        if pcar[1] >= self.coords[0] and pcar[1] <= self.coords[1]:
             Xcoll = True
-            print("Xcoll")
-        if pcar[2] <=self.coords[2] and pcar [3] >= self.coords[3]:
+        elif pcar[1] <= self.coords[0] and pcar[1] >= self.coords[0]:
+            Xcoll = True
+        #Y collision
+        if pcar[3] >= self.coords[2] and pcar[3] <= self.coords[3]:
             Ycoll = True
-            print("Ycoll")
+        elif pcar[3] <= self.coords[2] and pcar[3] >= self.coords[3]:
+            Ycoll = True
         if Xcoll == True and Ycoll == True:
-            collision = True
+            print("Full collision")
+        elif Xcoll == True:
+            print("X collision")
+        elif Ycoll == True:
+            print("Y collision")
+        
 
 #Allowing the variables for the cars, lanes, barriers, to be read as Objects
 upperbarrier = Objects(topbarrier)
