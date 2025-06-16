@@ -52,6 +52,9 @@ name = "Johnus" #Default name
 theme = roadcolours["day"] #Default theme
 quitgame = False
 debug = False
+Xcoll = False
+Ycoll = False
+collision = False
 topcarX = 0
 umcarX = 0
 lmcarX = 0
@@ -84,8 +87,16 @@ class Objects:
         
     #Collision detection
     def collcheck(self, coords):
+        Xcoll = False
+        Ycoll = False
         if pcar[0] <= self.coords[0] and pcar [1] >= self.coords[0]:
-            print("colled")
+            Xcoll = True
+            print("Xcoll")
+        if pcar[2] <=self.coords[2] and pcar [3] >= self.coords[3]:
+            Ycoll = True
+            print("Ycoll")
+        if Xcoll == True and Ycoll == True:
+            collision = True
 
 #Allowing the variables for the cars, lanes, barriers, to be read as Objects
 upperbarrier = Objects(topbarrier)
