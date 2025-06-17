@@ -54,7 +54,7 @@ quitgame = False
 debug = False
 Xcoll = False
 Ycoll = False
-collision = False
+crash = False
 topcarX = 0
 umcarX = 0
 lmcarX = 0
@@ -76,6 +76,7 @@ print("3.2, the cars' hitboxes' initial values")
 
 #The class for displaying the lanes and the lines on the road.
 class Objects:
+    
     #Initialises the class
     def __init__(self, coords):
         self.coords = coords
@@ -89,17 +90,19 @@ class Objects:
     def collcheck(self, coords):
         Xcoll = False
         Ycoll = False
-        if pcar[1] >= self.coords[0] and pcar[1] <= self.coords[1]:
+        crash = False
+        if pcar[0] >= self.coords[0] and pcar[0] <= self.coords[1]:
             Xcoll = True
-        elif pcar[1] <= self.coords[0] and pcar[1] >= self.coords[0]:
+        elif pcar[1] >= self.coords[0] and pcar[1] <= self.coords[0]:
             Xcoll = True
         #Y collision
-        if pcar[3] >= self.coords[2] and pcar[3] <= self.coords[3]:
+        if pcar[2] >= self.coords[2] and pcar[2] <= self.coords[3]:
             Ycoll = True
-        elif pcar[3] <= self.coords[2] and pcar[3] >= self.coords[3]:
+        elif pcar[3] >= self.coords[2] and pcar[3] <= self.coords[3]:
             Ycoll = True
         if Xcoll == True and Ycoll == True:
             print("Full collision")
+            quitgame = True
         elif Xcoll == True:
             print("X collision")
         elif Ycoll == True:
@@ -240,6 +243,7 @@ while not quitgame:
     
     for x in cars:
         x.collcheck(pcar)
+
 
     clock.tick(fps)
     pg.display.update()
