@@ -65,12 +65,12 @@ newlmX = 0
 newbottomX = 0
 print("3.1, initial variables")
 #The car hitboxes
-cartop1 = [1210, 1280, 23, 67]
-cartop2 = [1850, 1920, 23, 67]
-car2 = [1210, 1280, 93, 137]
-car3 = [1210, 1280, 163, 207]
-car4 = [1210, 1280, 233, 277]
-pcar = [10, 80, 23, 67]
+cartop1 = [1210, 1280, 23, 67, "redcar.png"]
+cartop2 = [1850, 1920, 23, 67, "greencar.png"]
+car2 = [1210, 1280, 93, 137, "bluecar.png"]
+car3 = [1210, 1280, 163, 207, "orangecar.png"]
+car4 = [1210, 1280, 233, 277, "tealcar.png"]
+pcar = [10, 80, 23, 67, "playercar.png"]
 print("3.2, the cars' hitboxes' initial values")
 displaycars = ["redcar.png", "greencar.png", "tealcar.png", "purpcar.png", "orangecar.png"]
 
@@ -83,15 +83,11 @@ class Objects:
         self.coords = coords
 
     #Draws the cars' hitboxes
-    def drawobjects(self, coords, colour, type):
+    def drawobjects(self, coords, colour):
         poly = pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
             (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3])))
         if type == "vehicle":
-            vehicle = rndm.choice(displaycars)
-            rancar = rndm.randint(0, 4)
-            rawcar = pg.image.load(vehicle).convert_alpha()
-            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
-            screen.blit(sizedcar, poly)
+            screen.blit(self.coords[4], poly)
 
         
     #Collision detection
@@ -195,6 +191,15 @@ while not quitgame:
                 movedown = False
             if event.key == pg.K_UP:
                 moveup = False
+
+
+    for x in cars:
+        if self.coords[0] > 1280:
+            vehicle = rndm.choice(displaycars)
+            rancar = rndm.randint(0, 4)
+            rawcar = pg.image.load(vehicle).convert_alpha()
+            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
+            self.coords[4] = sizedcar
 
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
