@@ -72,6 +72,7 @@ car3 = [1210, 1280, 163, 207]
 car4 = [1210, 1280, 233, 277]
 pcar = [10, 80, 23, 67]
 print("3.2, the cars' hitboxes' initial values")
+displaycars = ["redcar.png", "greencar.png", "tealcar.png", "purpcar.png", "orangecar.png"]
 
 
 #The class for displaying the lanes and the lines on the road.
@@ -82,9 +83,16 @@ class Objects:
         self.coords = coords
 
     #Draws the cars' hitboxes
-    def drawobjects(self, coords, colour):
-        pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
+    def drawobjects(self, coords, colour, type):
+        poly = pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
             (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3])))
+        if type == "vehicle":
+            vehicle = rndm.choice(displaycars)
+            rancar = rndm.randint(0, 4)
+            rawcar = pg.image.load(vehicle).convert_alpha()
+            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
+            screen.blit(sizedcar, poly)
+
         
     #Collision detection
     def collcheck(self, coords):
@@ -191,13 +199,13 @@ while not quitgame:
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
     for x in barriers:
-        x.drawobjects(screen, colour=(theme["barrier"]))
+        x.drawobjects(screen, colour=(theme["barrier"]), type=("road"))
     for x in roadlines:
-        x.drawobjects(screen, colour=(theme["lines"]))
+        x.drawobjects(screen, colour=(theme["lines"]), type=("road"))
     for x in cars:
-        x.drawobjects(screen, colour=(theme["car"]))
+        x.drawobjects(screen, colour=(theme["car"]), type=("vehicle"))
     for x in player:
-        x.drawobjects(screen, colour=(theme["car"]))
+        x.drawobjects(screen, colour=(theme["car"]), type=("vehicle"))
 
     #Moving the player car based on input
     if moveleft == True:
@@ -242,9 +250,9 @@ while not quitgame:
         car4[0] = 1280+car4rand
         car4[1] = 1350+car4rand
     
+    #Checking collision
     for x in cars:
         x.collcheck(pcar)
-
 
     clock.tick(fps)
     pg.display.update()
