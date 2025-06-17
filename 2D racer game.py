@@ -88,6 +88,7 @@ class Objects:
         
     #Collision detection
     def collcheck(self, coords):
+        global quitgame
         Xcoll = False
         Ycoll = False
         crash = False
