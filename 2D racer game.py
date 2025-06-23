@@ -83,11 +83,21 @@ class Objects:
         self.coords = coords
 
     #Draws the cars' hitboxes
-    def drawobjects(self, coords, colour):
+    def drawobjects(self, coords, colour, type):
         poly = pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
             (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3])))
         if type == "vehicle":
-            screen.blit(self.coords[4], poly)
+            rawcar = pg.image.load(self.coords[4]).convert_alpha()
+            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
+            screen.blit(sizedcar, poly)
+
+    def carchange(self, coords):
+        if self.coords[0] > 1280:
+            vehicle = rndm.choice(displaycars)
+            rancar = rndm.randint(0, 4)
+            rawcar = pg.image.load(vehicle).convert_alpha()
+            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
+            self.coords[4] = sizedcar
 
         
     #Collision detection
@@ -193,13 +203,7 @@ while not quitgame:
                 moveup = False
 
 
-    for x in cars:
-        if self.coords[0] > 1280:
-            vehicle = rndm.choice(displaycars)
-            rancar = rndm.randint(0, 4)
-            rawcar = pg.image.load(vehicle).convert_alpha()
-            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
-            self.coords[4] = sizedcar
+    
 
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
@@ -211,6 +215,9 @@ while not quitgame:
         x.drawobjects(screen, colour=(theme["car"]), type=("vehicle"))
     for x in player:
         x.drawobjects(screen, colour=(theme["car"]), type=("vehicle"))
+
+    for x in cars:
+        x.carchange(screen)
 
     #Moving the player car based on input
     if moveleft == True:
