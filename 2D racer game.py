@@ -99,6 +99,7 @@ class Objects:
             rawcar = pg.image.load(vehicle).convert_alpha()
             sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
             self.coords[4] = sizedcar
+            print(self.coords[4])
 
         
     #Collision detection
