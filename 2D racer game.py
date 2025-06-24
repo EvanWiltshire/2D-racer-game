@@ -65,12 +65,12 @@ newlmX = 0
 newbottomX = 0
 print("3.1, initial variables")
 #The car hitboxes
-cartop1 = [1210, 1280, 23, 67, '"redcar.png"']
-cartop2 = [1850, 1920, 23, 67, '"greencar.png"']
-car2 = [1210, 1280, 93, 137, '"bluecar.png"']
-car3 = [1210, 1280, 163, 207, '"orangecar.png"']
-car4 = [1210, 1280, 233, 277, '"tealcar.png"']
-pcar = [10, 80, 23, 67, '"playercar.png"']
+cartop1 = [1210, 1280, 23, 67, 'redcar.png']
+cartop2 = [1850, 1920, 23, 67, 'greencar.png']
+car2 = [1210, 1280, 93, 137, 'bluecar.png']
+car3 = [1210, 1280, 163, 207, 'orangecar.png']
+car4 = [1210, 1280, 233, 277, 'tealcar.png']
+pcar = [10, 80, 23, 67, 'playercar.png']
 print("3.2, the cars' hitboxes' initial values")
 displaycars = ['"redcar.png"', '"greencar.png"', '"tealcar.png"', '"purpcar.png"', '"orangecar.png"']
 
