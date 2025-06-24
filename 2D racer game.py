@@ -72,7 +72,7 @@ car3 = [1210, 1280, 163, 207, 'orangecar.png']
 car4 = [1210, 1280, 233, 277, 'tealcar.png']
 pcar = [10, 80, 23, 67, 'playercar.png']
 print("3.2, the cars' hitboxes' initial values")
-displaycars = ['"redcar.png"', '"greencar.png"', '"tealcar.png"', '"purpcar.png"', '"orangecar.png"']
+displaycars = ['redcar.png', 'greencar.png', 'tealcar.png', 'purpcar.png', 'orangecar.png']
 
 
 #The class for displaying the lanes and the lines on the road.
