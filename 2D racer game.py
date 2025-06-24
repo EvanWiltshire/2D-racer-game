@@ -94,11 +94,8 @@ class Objects:
 
     def carchange(self, coords):
         if self.coords[0] > 1280:
-            vehicle = rndm.choice(displaycars)
-            rancar = rndm.randint(0, 4)
-            rawcar = pg.image.load(vehicle).convert_alpha()
-            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
-            self.coords[4] = sizedcar
+            rancar = rndm.choice(displaycars)
+            self.coords[4] = rancar
             print(self.coords[4])
 
         
