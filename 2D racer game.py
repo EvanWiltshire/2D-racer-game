@@ -26,11 +26,11 @@ bottombarrier = [0, 1280, 280, 300]
 divider1 = [0, 1280, 70, 90]
 divider2 = [0, 1280, 140, 160]
 divider3 = [0, 1280, 210, 230]
-moveline1 = [0, 128, 0, 300]
-moveline2 = [256, 384, 0, 300]
-moveline3 = [512, 640, 0, 300]
-moveline4 = [768, 896, 0, 300]
-moveline5 = [1024, 1152, 0, 300]
+moveline1 = [0, 128, 70, 230]
+moveline2 = [256, 384, 70, 230]
+moveline3 = [512, 640, 70, 230]
+moveline4 = [768, 896, 70, 230]
+moveline5 = [1024, 1152, 70, 230]
 print("2.3, lane constants")
 #The clock for counting the fps
 clock = pg.time.Clock()
@@ -92,7 +92,7 @@ class Objects:
     def drawobjects(self, coords, colour, type):
         poly = pg.Rect((self.coords[0]), (self.coords[2]), 70, 44)
         if type == "vehicle" and drawboxes == False:
-            print(self.coords[4])
+            #print(self.coords[4])
             rawcar = pg.image.load(self.coords[4]).convert_alpha()
             sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
             screen.blit(sizedcar, poly)
@@ -125,9 +125,9 @@ class Objects:
         if Xcoll == True and Ycoll == True:
             print("Full collision")
             quitgame = True
-        elif Xcoll == True:
+        #elif Xcoll == True:
             print("X collision")
-        elif Ycoll == True:
+        #elif Ycoll == True:
             print("Y collision")
         
 
@@ -260,6 +260,16 @@ while not quitgame:
     car3[1] -= (speedmod *6)
     car4[0] -= (speedmod * 8)
     car4[1] -= (speedmod *8)
+    moveline1[0] -= (speedmod * 16)
+    moveline1[1] -= (speedmod * 16)
+    moveline2[0] -= (speedmod * 16)
+    moveline2[1] -= (speedmod * 16)
+    moveline3[0] -= (speedmod * 16)
+    moveline3[1] -= (speedmod * 16)
+    moveline4[0] -= (speedmod * 16)
+    moveline4[1] -= (speedmod * 16)
+    moveline5[0] -= (speedmod * 16)
+    moveline5[1] -= (speedmod * 16)
 
     if cartop1[1] <= 0:
         cartop1[0] = 1280
@@ -279,6 +289,21 @@ while not quitgame:
         car4rand = (rndm.randint(20, 60)*10)
         car4[0] = 1280+car4rand
         car4[1] = 1350+car4rand
+    if moveline1[1] <= 0:
+        moveline1[0] = 1280
+        moveline1[1] = 1350
+    if moveline2[1] <= 0:
+        moveline2[0] = 1280
+        moveline2[1] = 1350
+    if moveline3[1] <= 0:
+        moveline3[0] = 1280
+        moveline3[1] = 1350
+    if moveline4[1] <= 0:
+        moveline4[0] = 1280
+        moveline4[1] = 1350
+    if moveline5[1] <= 0:
+        moveline5[0] = 1280
+        moveline5[1] = 1350
     
     #Checking collision
     for x in cars:
