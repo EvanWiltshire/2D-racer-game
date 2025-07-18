@@ -37,10 +37,10 @@ pg.display.set_caption("It's like a real freeway")
 print("2.5, displayed info")
 #Road themes
 roadcolours = {
-    "day":{"car":(255, 255, 255), "lane":(30, 30, 30), "barrier":(200, 200, 200), "lines":(255, 255, 255)},
-    "night":{"car":(255, 255, 255), "lane":(15, 15, 15), "barrier":(30, 30, 30), "lines":(50, 50, 50)},
-    "fog":{"car":(255, 255, 255), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
-    "jank":{"car":(255, 255, 255), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
+    "day":{"car":(255, 255, 0), "lane":(30, 30, 30), "barrier":(200, 200, 200), "lines":(255, 255, 255)},
+    "night":{"car":(255, 255, 0), "lane":(15, 15, 15), "barrier":(30, 30, 30), "lines":(50, 50, 50)},
+    "fog":{"car":(255, 255, 0), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
+    "jank":{"car":(255, 255, 0), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
 print("2.6, colour themes")
 
@@ -225,10 +225,10 @@ while not quitgame:
         x.carchange(screen)
 
     #Moving the player car based on input
-    if moveleft == True:
+    if moveleft == True and pcar[0] >= 5:
         pcar[0] -= 1
         pcar[1] -= 1
-    if moveright == True:
+    if moveright == True and pcar[1] <= 1275:
         pcar[0] += 1
         pcar[1] += 1
     if moveup == True and pcar[2] > 23:
