@@ -37,10 +37,10 @@ pg.display.set_caption("It's like a real freeway")
 print("2.5, displayed info")
 #Road themes
 roadcolours = {
-    "day":{"car":(190, 66, 72), "lane":(30, 30, 30), "barrier":(200, 200, 200), "lines":(255, 255, 255)},
-    "night":{"car":(63, 22, 23), "lane":(15, 15, 15), "barrier":(30, 30, 30), "lines":(50, 50, 50)},
-    "fog":{"car":(42, 15, 16), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
-    "jank":{"car":(255, 100, 100), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
+    "day":{"car":(30, 30, 30, 0), "lane":(30, 30, 30), "barrier":(200, 200, 200), "lines":(255, 255, 255)},
+    "night":{"car":(15, 15, 15), "lane":(15, 15, 15), "barrier":(30, 30, 30), "lines":(50, 50, 50)},
+    "fog":{"car":(20, 15, 10), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
+    "jank":{"car":(255, 255, 255), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
 print("2.6, colour themes")
 
@@ -84,16 +84,18 @@ class Objects:
 
     #Draws the cars' hitboxes
     def drawobjects(self, coords, colour, type):
-        poly = pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
-            (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3])))
+        poly = pg.polygon((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
+            (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3]))
         if type == "vehicle":
             print(self.coords[4])
             rawcar = pg.image.load(self.coords[4]).convert_alpha()
             sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
             screen.blit(sizedcar, poly)
+        if name == "Sully" or name == "Hitboxes" or name == "hitboxes":
+            pg.draw.polygon(screen, (255, 255, 255), poly)
 
     def carchange(self, coords):
-        if self.coords[0] > 1280:
+        if self.coords[0] > 1280 and self.coords[0] < 1300:
             rancar = rndm.choice(displaycars)
             self.coords[4] = rancar
             print(self.coords[4])
@@ -170,6 +172,7 @@ else:
         theme = roadcolours["night"]
     elif conditions == "foggy":
         theme = roadcolours["fog"]
+#If player is called "hitboxes" or "Hitboxes", makes them visible
 print("4.3, theme set")
 
 
