@@ -26,6 +26,11 @@ bottombarrier = [0, 1280, 280, 300]
 divider1 = [0, 1280, 70, 90]
 divider2 = [0, 1280, 140, 160]
 divider3 = [0, 1280, 210, 230]
+moveline1 = [0, 128, 0, 300]
+moveline2 = [256, 384, 0, 300]
+moveline3 = [512, 640, 0, 300]
+moveline4 = [768, 896, 0, 300]
+moveline5 = [1024, 1152, 0, 300]
 print("2.3, lane constants")
 #The clock for counting the fps
 clock = pg.time.Clock()
@@ -138,11 +143,17 @@ umcar = Objects(car2)
 lmcar = Objects(car3)
 bottomcar = Objects(car4)
 playercar = Objects(pcar)
+movelineA = Objects(moveline1)
+movelineB = Objects(moveline2)
+movelineC = Objects(moveline3)
+movelineD = Objects(moveline4)
+movelineE = Objects(moveline5)
 #Grouping the objects to have them separate for drawing/collision checking
 barriers = [upperbarrier, lowerbarrier]
 roadlines = [line1, line2, line3]
 cars = [topcar1, topcar2, umcar, lmcar, bottomcar]
 player = [playercar]
+moveillusion = [movelineA, movelineB, movelineC, movelineD, movelineE]
 
 
 #Difficulty and theme selection using easygui
@@ -216,6 +227,8 @@ while not quitgame:
         x.drawobjects(screen, colour=(theme["barrier"]), type=("road"))
     for x in roadlines:
         x.drawobjects(screen, colour=(theme["lines"]), type=("road"))
+    for x in moveillusion:
+        x.drawobjects(screen, colour=(theme["lane"]), type=("road"))
     for x in cars:
         x.drawobjects(screen, colour=(theme["car"]), type=("vehicle"))
     for x in player:
