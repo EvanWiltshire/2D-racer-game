@@ -44,7 +44,7 @@ print("2.5, displayed info")
 roadcolours = {
     "day":{"car":(255, 255, 0), "lane":(30, 30, 30), "barrier":(200, 200, 200), "lines":(255, 255, 255)},
     "night":{"car":(255, 255, 0), "lane":(15, 15, 15), "barrier":(30, 30, 30), "lines":(50, 50, 50)},
-    "fog":{"car":(255, 255, 0), "lane":(20, 15, 10), "barrier":(75, 50, 20), "lines":(255, 255, 255)},
+    "fog":{"car":(255, 255, 0), "lane":(20, 15, 10), "barrier":(25, 25, 25), "lines":(255, 255, 255)},
     "jank":{"car":(255, 255, 0), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
 print("2.6, colour themes")
@@ -90,8 +90,8 @@ class Objects:
 
     #Draws the cars' hitboxes
     def drawobjects(self, coords, colour, type):
-        poly = pg.Rect((self.coords[0]), (self.coords[2]), 70, 44)
         if type == "vehicle" and drawboxes == False:
+            poly = pg.Rect((self.coords[0]), (self.coords[2]), 70, 44)
             #print(self.coords[4])
             rawcar = pg.image.load(self.coords[4]).convert_alpha()
             sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
@@ -260,16 +260,16 @@ while not quitgame:
     car3[1] -= (speedmod *6)
     car4[0] -= (speedmod * 8)
     car4[1] -= (speedmod *8)
-    moveline1[0] -= (speedmod * 16)
-    moveline1[1] -= (speedmod * 16)
-    moveline2[0] -= (speedmod * 16)
-    moveline2[1] -= (speedmod * 16)
-    moveline3[0] -= (speedmod * 16)
-    moveline3[1] -= (speedmod * 16)
-    moveline4[0] -= (speedmod * 16)
-    moveline4[1] -= (speedmod * 16)
-    moveline5[0] -= (speedmod * 16)
-    moveline5[1] -= (speedmod * 16)
+    moveline1[0] -= (speedmod * 12)
+    moveline1[1] -= (speedmod * 12)
+    moveline2[0] -= (speedmod * 12)
+    moveline2[1] -= (speedmod * 12)
+    moveline3[0] -= (speedmod * 12)
+    moveline3[1] -= (speedmod * 12)
+    moveline4[0] -= (speedmod * 12)
+    moveline4[1] -= (speedmod * 12)
+    moveline5[0] -= (speedmod * 12)
+    moveline5[1] -= (speedmod * 12)
 
     if cartop1[1] <= 0:
         cartop1[0] = 1280
