@@ -23,9 +23,11 @@ print("2.2, screen display")
 #lanes/barriers (constants)
 topbarrier = [0, 1820, 0, 20]
 bottombarrier = [0, 1280, 280, 300]
-divider1 = [0, 1280, 70, 90]
-divider2 = [0, 1280, 140, 160]
-divider3 = [0, 1280, 210, 230]
+#Road lane dividers
+divider1 = [0, 1280, 75, 85]
+divider2 = [0, 1280, 145, 155]
+divider3 = [0, 1280, 215, 225]
+#Imitates movement on the road
 moveline1 = [0, 128, 70, 230]
 moveline2 = [256, 384, 70, 230]
 moveline3 = [512, 640, 70, 230]
@@ -48,6 +50,9 @@ roadcolours = {
     "jank":{"car":(255, 255, 0), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
 print("2.6, colour themes")
+#Player name and score
+score = ["Johnus", "difficulty", 0]
+print("2.7, default player score")
 
 
 #Variables
@@ -81,6 +86,20 @@ print("3.2, the cars' hitboxes' initial values")
 displaycars = ['redcar.png', 'greencar.png', 'tealcar.png', 'purpcar.png', 'orangecar.png']
 
 
+#The function for saving the player's score
+def save(thing, file):
+    with open (filename, "w") as file:
+        json.dump(thing, file, indent=4)
+    print("saving")
+
+#The function for loading the player's score
+def load(thing, file):
+    with open (filename, "r") as file:
+        highscore = json.load(file)
+    return highscore
+    print("loaded")
+
+
 #The class for displaying the lanes and the lines on the road.
 class Objects:
     
@@ -105,8 +124,7 @@ class Objects:
             rancar = rndm.choice(displaycars)
             self.coords[4] = rancar
             print(self.coords[4])
-
-        
+   
     #Collision detection
     def collcheck(self, coords):
         global quitgame
@@ -129,6 +147,12 @@ class Objects:
             print("X collision")
         #elif Ycoll == True:
             print("Y collision")
+
+    #Scoring when passing a car
+    def scoring(self, coords):
+        global score
+        if pcar[1] == self.coords[0]:
+            score[2] += 10
         
 
 #Allowing the variables for the cars, lanes, barriers, to be read as Objects
@@ -158,6 +182,7 @@ moveillusion = [movelineA, movelineB, movelineC, movelineD, movelineE]
 
 #Difficulty and theme selection using easygui
 name = box.enterbox(msg="What is your name?", title="player name selection")
+score[0] = name
 diff = box.choicebox(msg="Please pick your preferred difficulty (higher difficulties gain more points)",\
     title="Difficulty selection", choices=["easy", "medium", "hard"])
 print("4.1, name, choices, colour")
@@ -168,6 +193,7 @@ elif diff == "medium":
     speedmod = 1   
 elif diff == "hard":
     speedmod = 1.5
+score[1] = diff
 print("4.2, difficulty chosen")
 
 #Setting the theme based on selected theme
@@ -308,6 +334,15 @@ while not quitgame:
     #Checking collision
     for x in cars:
         x.collcheck(pcar)
+    for x in cars:
+        x.scoring(pcar)
+    print(score[2])
+    
 
     clock.tick(fps)
     pg.display.update()
+
+
+
+
+quit()
