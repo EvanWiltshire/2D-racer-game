@@ -329,6 +329,7 @@ while not quitgame:
     #Checking collision
     for x in cars:
         x.collcheck(pcar)
+    score[2] = round(score[2], 0)
     print(score[2])
     
 
@@ -336,8 +337,8 @@ while not quitgame:
     pg.display.update()
 
 
-print(score[2], " scored ", score[0], " on ", score[1])
-if score[0] > highscore[0]: 
+print(score[0], " scored ", score[2], " on ", score[1])
+if score[2] > highscore[2]: 
     save(score, "highscore.json")
 
 quit()
