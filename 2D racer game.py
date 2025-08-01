@@ -88,7 +88,7 @@ displaycars = ['redcar.png', 'greencar.png', 'tealcar.png', 'purpcar.png', 'oran
 
 #The function for saving the player's score
 def save(thing, file):
-    with open (filename, "w") as file:
+    with open (file, "w") as file:
         json.dump(thing, file, indent=4)
     print("saving")
 
@@ -143,16 +143,11 @@ class Objects:
         if Xcoll == True and Ycoll == True:
             print("Full collision")
             quitgame = True
-        #elif Xcoll == True:
+        elif Xcoll == True:
             print("X collision")
+            score[2] += (speedmod * 2)
         #elif Ycoll == True:
             print("Y collision")
-
-    #Scoring when passing a car
-    def scoring(self, coords):
-        global score
-        if pcar[1] == self.coords[0]:
-            score[2] += 10
         
 
 #Allowing the variables for the cars, lanes, barriers, to be read as Objects
@@ -334,8 +329,6 @@ while not quitgame:
     #Checking collision
     for x in cars:
         x.collcheck(pcar)
-    for x in cars:
-        x.scoring(pcar)
     print(score[2])
     
 
@@ -343,6 +336,8 @@ while not quitgame:
     pg.display.update()
 
 
-
+print(score[2], " scored ", score[0], " on ", score[1])
+if score[0] > highscore[0]: 
+    save(score, "highscore.json")
 
 quit()
