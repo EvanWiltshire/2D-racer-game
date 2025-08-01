@@ -60,6 +60,7 @@ print("2.7, default player score")
 speedmod = 1 #Default speed
 name = "Johnus" #Default name
 theme = roadcolours["day"] #Default theme
+highscore = ["Johnus", "easy", 0] #Default highscore
 quitgame = False
 debug = False
 Xcoll = False
