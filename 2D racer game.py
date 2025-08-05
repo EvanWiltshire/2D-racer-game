@@ -10,7 +10,7 @@ print("1")
 
 #Constants
 scrnX = 1280
-scrnY = 300
+scrnY = 350
 fps = 60
 moveleft = False
 moveright = False
@@ -67,14 +67,6 @@ Xcoll = False
 Ycoll = False
 crash = False
 drawboxes = False
-topcarX = 0
-umcarX = 0
-lmcarX = 0
-bottomcarX = 0
-newtopX = 0
-newumX = 0
-newlmX = 0
-newbottomX = 0
 print("3.1, initial variables")
 #The car hitboxes
 cartop1 = [1210, 1280, 23, 67, 'redcar.png']
@@ -101,6 +93,11 @@ def load(thing, file):
     print(highscore)
     print("loaded")
 
+#The function for displaying text
+def message(msg, txt_colour, bkgd_colour, txtX, txtY):
+    txt = font.render(msg, True, txt_colour, bkgd_colour)
+    textbox=txt.get_rect(center = (txtX, txtY))
+    screen.blit(txt, textbox)
 
 #The class for displaying the lanes and the lines on the road.
 class Objects:
@@ -243,7 +240,8 @@ while not quitgame:
                 moveup = False
 
 
-    
+    #Displaying the highscore text
+    message("bees", (255, 255, 255), roadcolours["jank"["lane"]], 300, 325)
 
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
