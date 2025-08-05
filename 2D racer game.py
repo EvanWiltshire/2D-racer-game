@@ -213,7 +213,7 @@ else:
 if name == "Hitboxes" or name == "hitboxes" or debug == True:
     drawboxes = True
 print("4.3, theme set")
-load(highscore, "highscore.json")
+highscore = load(highscore, "highscore.json")
 
 
 #The game loop
@@ -262,7 +262,10 @@ while not quitgame:
         x.carchange(screen)
 
     #Displaying the highscore text
-    message("bees", (255, 255, 255), roadcolours["jank"]["lane"], 300, 325)
+    scoremsg1 = ('your score is ', score[2], 'highscore:')
+    scoremsg2 = (highscore[2], ' by ', highscore[0])
+    scoremsg = str(scoremsg1 + scoremsg2)
+    message(scoremsg, roadcolours["day"]["lines"], roadcolours["jank"]["lane"], 640, 325)
 
 
     #Moving the player car based on input
