@@ -76,7 +76,12 @@ car3 = [1210, 1280, 163, 207, 'orangecar.png']
 car4 = [1210, 1280, 233, 277, 'tealcar.png']
 pcar = [10, 80, 23, 67, 'playercar.png']
 print("3.2, the cars' hitboxes' initial values")
+#Displaying the actual car pngs
 displaycars = ['redcar.png', 'greencar.png', 'tealcar.png', 'purpcar.png', 'orangecar.png']
+print("3.3, the cars' png display options")
+#The font
+font = pg.font.SysFont("arial.ttf", 50)
+print("3.4, font loaded")
 
 
 #The function for saving the player's score
