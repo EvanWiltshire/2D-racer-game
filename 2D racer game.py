@@ -241,7 +241,7 @@ while not quitgame:
 
 
     #Displaying the highscore text
-    message("bees", (255, 255, 255), roadcolours["jank"["lane"]], 300, 325)
+    message("bees", (255, 255, 255), roadcolours["jank"]["lane"], 300, 325)
 
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
