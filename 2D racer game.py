@@ -95,9 +95,10 @@ def save(thing, file):
 
 #The function for loading the player's score
 def load(thing, file):
-    with open (filename, "r") as file:
+    with open (file, "r") as file:
         highscore = json.load(file)
     return highscore
+    print(highscore)
     print("loaded")
 
 
@@ -210,6 +211,7 @@ else:
 if name == "Hitboxes" or name == "hitboxes" or debug == True:
     drawboxes = True
 print("4.3, theme set")
+load(highscore, "highscore.json")
 
 
 #The game loop
