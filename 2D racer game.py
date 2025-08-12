@@ -313,9 +313,10 @@ while not quitgame:
     moveline5[0] -= (speedmod * 12)
     moveline5[1] -= (speedmod * 12)
 
+    #Repositioning the cars once they leave the screen
     for x in cars:
         x.relocate(screen, "vehicle")
-        
+    #Repositioning the lines once they leave the screen
     for x in moveillusion:
         x.relocate(screen, "movinglines")
     
