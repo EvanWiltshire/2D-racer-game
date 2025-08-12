@@ -322,19 +322,19 @@ while not quitgame:
         car4[1] = 1350+car4rand
     if moveline1[1] <= 0:
         moveline1[0] = 1280
-        moveline1[1] = 1350
+        moveline1[1] = 1408
     if moveline2[1] <= 0:
         moveline2[0] = 1280
-        moveline2[1] = 1350
+        moveline2[1] = 1408
     if moveline3[1] <= 0:
         moveline3[0] = 1280
-        moveline3[1] = 1350
+        moveline3[1] = 1408
     if moveline4[1] <= 0:
         moveline4[0] = 1280
-        moveline4[1] = 1350
+        moveline4[1] = 1408
     if moveline5[1] <= 0:
         moveline5[0] = 1280
-        moveline5[1] = 1350
+        moveline5[1] = 1408
     
     #Checking collision
     for x in cars:
