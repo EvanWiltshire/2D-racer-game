@@ -152,6 +152,17 @@ class Objects:
             score[2] += (speedmod * 2)
         #elif Ycoll == True:
             print("Y collision")
+
+    #Location repositioning
+    def relocate(self, coords, type):
+        if self.coords[1]<= 0:
+            if type == "vehicle":
+                carrand = (rndm.randint(20, 60)*10)
+                self.coords[0] = 1280+carrand
+                self.coords [1] = 1350+carrand
+            elif type == "movinglines":
+                self.coords[0] = 1280
+                self.coords[1] = 1408
         
 
 #Allowing the variables for the cars, lanes, barriers, to be read as Objects
@@ -302,39 +313,11 @@ while not quitgame:
     moveline5[0] -= (speedmod * 12)
     moveline5[1] -= (speedmod * 12)
 
-    if cartop1[1] <= 0:
-        cartop1[0] = 1280
-        cartop1[1] = 1350
-    if cartop2[1] <= 0:
-        cartop2[0] = 1280
-        cartop2[1] = 1350
-    if car2[1] <= 0:
-        car2rand = (rndm.randint(10, 40)*10)
-        car2[0] = 1280+car2rand
-        car2[1] = 1350+car2rand
-    if car3[1] <= 0:
-        car3rand = (rndm.randint(15, 50)*10)
-        car3[0] = 1280+car3rand
-        car3[1] = 1350+car3rand
-    if car4[1] <= 0:
-        car4rand = (rndm.randint(20, 60)*10)
-        car4[0] = 1280+car4rand
-        car4[1] = 1350+car4rand
-    if moveline1[1] <= 0:
-        moveline1[0] = 1280
-        moveline1[1] = 1408
-    if moveline2[1] <= 0:
-        moveline2[0] = 1280
-        moveline2[1] = 1408
-    if moveline3[1] <= 0:
-        moveline3[0] = 1280
-        moveline3[1] = 1408
-    if moveline4[1] <= 0:
-        moveline4[0] = 1280
-        moveline4[1] = 1408
-    if moveline5[1] <= 0:
-        moveline5[0] = 1280
-        moveline5[1] = 1408
+    for x in cars:
+        x.relocate(screen, "vehicle")
+        
+    for x in moveillusion:
+        x.relocate(screen, "movinglines")
     
     #Checking collision
     for x in cars:
