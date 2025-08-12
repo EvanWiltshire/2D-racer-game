@@ -28,11 +28,11 @@ divider1 = [0, 1280, 75, 85]
 divider2 = [0, 1280, 145, 155]
 divider3 = [0, 1280, 215, 225]
 #Imitates movement on the road
-moveline1 = [0, 128, 70, 230]
-moveline2 = [256, 384, 70, 230]
-moveline3 = [512, 640, 70, 230]
-moveline4 = [768, 896, 70, 230]
-moveline5 = [1024, 1152, 70, 230]
+moveline1 = [0, 128, 70, 230, "n/a", 12]
+moveline2 = [256, 384, 70, 230, "n/a", 12]
+moveline3 = [512, 640, 70, 230, "n/a", 12]
+moveline4 = [768, 896, 70, 230, "n/a", 12]
+moveline5 = [1024, 1152, 70, 230, "n/a", 12]
 print("2.3, lane constants")
 #The clock for counting the fps
 clock = pg.time.Clock()
@@ -69,11 +69,11 @@ crash = False
 drawboxes = False
 print("3.1, initial variables")
 #The car hitboxes
-cartop1 = [1210, 1280, 23, 67, 'redcar.png']
-cartop2 = [1850, 1920, 23, 67, 'greencar.png']
-car2 = [1210, 1280, 93, 137, 'bluecar.png']
-car3 = [1210, 1280, 163, 207, 'orangecar.png']
-car4 = [1210, 1280, 233, 277, 'tealcar.png']
+cartop1 = [1210, 1280, 23, 67, 'redcar.png', 2]
+cartop2 = [1850, 1920, 23, 67, 'greencar.png', 2]
+car2 = [1210, 1280, 93, 137, 'bluecar.png', 4]
+car3 = [1210, 1280, 163, 207, 'orangecar.png', 6]
+car4 = [1210, 1280, 233, 277, 'tealcar.png', 8]
 pcar = [10, 80, 23, 67, 'playercar.png']
 print("3.2, the cars' hitboxes' initial values")
 #Displaying the actual car pngs
@@ -163,6 +163,12 @@ class Objects:
             elif type == "movinglines":
                 self.coords[0] = 1280
                 self.coords[1] = 1408
+
+    #Movement of the NPCs
+    def NPCmove(self, coords):
+        speed = (self.coords[5] * speedmod)
+        self.coords[0] -= speed
+        self.coords[1] -= speed
         
 
 #Allowing the variables for the cars, lanes, barriers, to be read as Objects
@@ -292,35 +298,28 @@ while not quitgame:
     if movedown == True and pcar[3] < 277:
         pcar[2] += 3
         pcar[3] += 3
-    cartop1[0] -= (speedmod * 2)
-    cartop1[1] -= (speedmod *2)
-    cartop2[0] -= (speedmod * 2)
-    cartop2[1] -= (speedmod *2)
-    car2[0] -= (speedmod * 4)
-    car2[1] -= (speedmod *4)
-    car3[0] -= (speedmod * 6)
-    car3[1] -= (speedmod *6)
-    car4[0] -= (speedmod * 8)
-    car4[1] -= (speedmod *8)
-    moveline1[0] -= (speedmod * 12)
-    moveline1[1] -= (speedmod * 12)
-    moveline2[0] -= (speedmod * 12)
-    moveline2[1] -= (speedmod * 12)
-    moveline3[0] -= (speedmod * 12)
-    moveline3[1] -= (speedmod * 12)
-    moveline4[0] -= (speedmod * 12)
-    moveline4[1] -= (speedmod * 12)
-    moveline5[0] -= (speedmod * 12)
-    moveline5[1] -= (speedmod * 12)
+   
 
-    #Repositioning the cars once they leave the screen
+
+    #NPC car movement/control stuff
+
+    #Moving NPCs across screen
+    #Moving the NPC cars across the screen
+    for x in cars:
+        x.NPCmove(screen)
+    #Moving the illusion boxes of movement across the screen
+    for x in moveillusion:
+        x.NPCmove(screen)
+
+    #Relocating the NPCs
+    #Repositioning the NPCcars once they leave the screen
     for x in cars:
         x.relocate(screen, "vehicle")
-    #Repositioning the lines once they leave the screen
+    #Repositioning the illusion boxes of movement once they leave the screen
     for x in moveillusion:
         x.relocate(screen, "movinglines")
     
-    #Checking collision
+    #Checking collision of the cars against the player car
     for x in cars:
         x.collcheck(pcar)
     score[2] = round(score[2], 0)
