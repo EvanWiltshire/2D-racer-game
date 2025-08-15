@@ -279,8 +279,8 @@ while not quitgame:
         x.carchange(screen)
 
     #Displaying the highscore text
-    scoremsg1 = ('your score is ', score[2], 'highscore:')
-    scoremsg2 = (highscore[2], ' by ', highscore[0])
+    scoremsg1 = (f"Your score is {score[2]}, highscore:")
+    scoremsg2 = (f"{highscore[2]} by {highscore[0]}")
     scoremsg = str(scoremsg1 + scoremsg2)
     message(scoremsg, roadcolours["day"]["lines"], roadcolours["jank"]["lane"], 640, 325)
 
