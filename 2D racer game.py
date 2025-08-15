@@ -144,6 +144,7 @@ class Objects:
                     (self.coords[1], self.coords[3]),(self.coords[0], \
                         self.coords[3])))
 
+    #Relocates the cars
     def carchange(self, coords):
         if self.coords[0] > 1280 and self.coords[0] < 1300:
             rancar = rndm.choice(displaycars)
