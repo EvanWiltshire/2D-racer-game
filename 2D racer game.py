@@ -1,10 +1,12 @@
-#Setting up the absolute baseline: imports, initialisation, the game display
+#Setting up the absolute baseline
+#Imports
 import pygame as pg
 import math as mths
 import json
 import time
 import easygui as box
 import random as rndm
+#initialisation of pygame
 pg.init()
 print("1")
 
@@ -44,10 +46,14 @@ pg.display.set_caption("It's like a real freeway")
 print("2.5, displayed info")
 #Road themes
 roadcolours = {
-    "day":{"car":(255, 255, 0), "lane":(30, 30, 30), "barrier":(200, 200, 200), "lines":(255, 255, 255)},
-    "night":{"car":(255, 255, 0), "lane":(15, 15, 15), "barrier":(30, 30, 30), "lines":(50, 50, 50)},
-    "fog":{"car":(255, 255, 0), "lane":(20, 15, 10), "barrier":(25, 25, 25), "lines":(255, 255, 255)},
-    "jank":{"car":(255, 255, 0), "lane":(0, 0, 0), "barrier":(0, 255, 200), "lines":(255, 0, 255)}
+    "day":{"car":(255, 255, 0), "lane":(30, 30, 30), \
+        "barrier":(200, 200, 200), "lines":(255, 255, 255)},
+    "night":{"car":(255, 255, 0), "lane":(15, 15, 15), \
+        "barrier":(30, 30, 30), "lines":(50, 50, 50)},
+    "fog":{"car":(255, 255, 0), "lane":(20, 15, 10), \
+        "barrier":(25, 25, 25), "lines":(255, 255, 255)},
+    "jank":{"car":(255, 255, 0), "lane":(0, 0, 0), \
+        "barrier":(0, 255, 200), "lines":(255, 0, 255)}
 }
 print("2.6, colour themes")
 #Player name and score
@@ -68,7 +74,8 @@ Ycoll = False
 crash = False
 drawboxes = False
 print("3.1, initial variables")
-#The car hitboxes
+#The car hitboxes 
+#left X, right X, topY, bottomY, car colour, speedmod
 cartop1 = [1210, 1280, 23, 67, 'redcar.png', 2]
 cartop2 = [1850, 1920, 23, 67, 'greencar.png', 2]
 car2 = [1210, 1280, 93, 137, 'bluecar.png', 4]
@@ -77,11 +84,25 @@ car4 = [1210, 1280, 233, 277, 'tealcar.png', 8]
 pcar = [10, 80, 23, 67, 'playercar.png']
 print("3.2, the cars' hitboxes' initial values")
 #Displaying the actual car pngs
-displaycars = ['redcar.png', 'greencar.png', 'tealcar.png', 'purpcar.png', 'orangecar.png']
+displaycars = ['redcar.png', 'greencar.png', \
+    'bluecar.png', 'tealcar.png', 'purpcar.png', 'orangecar.png']
 print("3.3, the cars' png display options")
+
+
+#Caching and pre-loading the pngs and clock
+#Pre-drawing the cars for efficiency
+carpngs = {}
+for carfiles in displaycars:
+    #Loads main cars
+    carpngs[carfiles] = pg.transform.smoothscale(pg.image.load\
+        (carfiles).convert_alpha(), [70,44])
+    #Loads player car separately to prevent backwards NPCs
+    carpngs['playercar.png'] = pg.transform.smoothscale(pg.image.load\
+        ('playercar.png').convert_alpha(), [70, 44])
+print(f"4.1, loaded pngs onto RAM, {carpngs}")
 #The font
 font = pg.font.SysFont("arial.ttf", 50)
-print("3.4, font loaded")
+print("4.2, font loaded")
 
 
 #The function for saving the player's score
@@ -116,12 +137,12 @@ class Objects:
         if type == "vehicle" and drawboxes == False:
             poly = pg.Rect((self.coords[0]), (self.coords[2]), 70, 44)
             #print(self.coords[4])
-            rawcar = pg.image.load(self.coords[4]).convert_alpha()
-            sizedcar = pg.transform.smoothscale(rawcar, [70, 44])
-            screen.blit(sizedcar, poly)
+            screen.blit(carpngs[self.coords[4]], poly)
         elif drawboxes == True or type != "vehicle":
-            pg.draw.polygon(screen, colour, ((self.coords[0], self.coords[2]), (self.coords[1], self.coords[2]), \
-            (self.coords[1], self.coords[3]), (self.coords[0], self.coords[3])))
+            pg.draw.polygon(screen, colour, ((self.coords[0], \
+                self.coords[2]), (self.coords[1], self.coords[2]), \
+                    (self.coords[1], self.coords[3]),(self.coords[0], \
+                        self.coords[3])))
 
     def carchange(self, coords):
         if self.coords[0] > 1280 and self.coords[0] < 1300:
@@ -132,26 +153,27 @@ class Objects:
     #Collision detection
     def collcheck(self, coords):
         global quitgame
-        Xcoll = False
-        Ycoll = False
-        crash = False
-        if pcar[0] >= self.coords[0] and pcar[0] <= self.coords[1]:
-            Xcoll = True
-        elif pcar[1] >= self.coords[0] and pcar[1] <= self.coords[0]:
-            Xcoll = True
-        #Y collision
-        if pcar[2] >= self.coords[2] and pcar[2] <= self.coords[3]:
-            Ycoll = True
-        elif pcar[3] >= self.coords[2] and pcar[3] <= self.coords[3]:
-            Ycoll = True
-        if Xcoll == True and Ycoll == True:
-            print("Full collision")
-            quitgame = True
-        elif Xcoll == True:
-            print("X collision")
-            score[2] += (speedmod * 2)
-        #elif Ycoll == True:
-            print("Y collision")
+        if self.coords[0] < scrnX and self.coords[1] > 0: 
+            Xcoll = False
+            Ycoll = False
+            crash = False
+            if pcar[0] >= self.coords[0] and pcar[0] <= self.coords[1]:
+                Xcoll = True
+            elif pcar[1] >= self.coords[0] and pcar[1] <= self.coords[0]:
+                Xcoll = True
+            #Y collision
+            if pcar[2] >= self.coords[2] and pcar[2] <= self.coords[3]:
+                Ycoll = True
+            elif pcar[3] >= self.coords[2] and pcar[3] <= self.coords[3]:
+                Ycoll = True
+            if Xcoll == True and Ycoll == True:
+                print("Full collision")
+                quitgame = True
+            elif Xcoll == True:
+                print("X collision")
+                score[2] += (speedmod * 2)
+            #elif Ycoll == True:
+                #print("Y collision")
 
     #Location repositioning
     def relocate(self, coords, type):
@@ -171,7 +193,7 @@ class Objects:
         self.coords[1] -= speed
         
 
-#Allowing the variables for the cars, lanes, barriers, to be read as Objects
+#Allowing the variables to be read as Objects
 upperbarrier = Objects(topbarrier)
 lowerbarrier = Objects(bottombarrier)
 line1 = Objects(divider1)
@@ -188,7 +210,7 @@ movelineB = Objects(moveline2)
 movelineC = Objects(moveline3)
 movelineD = Objects(moveline4)
 movelineE = Objects(moveline5)
-#Grouping the objects to have them separate for drawing/collision checking
+#Grouping the objects for collision and drawing
 barriers = [upperbarrier, lowerbarrier]
 roadlines = [line1, line2, line3]
 cars = [topcar1, topcar2, umcar, lmcar, bottomcar]
@@ -197,10 +219,12 @@ moveillusion = [movelineA, movelineB, movelineC, movelineD, movelineE]
 
 
 #Difficulty and theme selection using easygui
-name = box.enterbox(msg="What is your name?", title="player name selection")
+name = box.enterbox(msg="What is your name?", \
+    title="player name selection")
 score[0] = name
-diff = box.choicebox(msg="Please pick your preferred difficulty (higher difficulties gain more points)",\
-    title="Difficulty selection", choices=["easy", "medium", "hard"])
+diff = box.choicebox(msg="Please pick your preferred difficulty \
+    (higher difficulties gain more points)", \
+        title="Difficulty selection", choices=["easy", "medium", "hard"])
 print("4.1, name, choices, colour")
 #Difficulty selection
 if diff == "easy":
@@ -218,19 +242,23 @@ if diff == "hard" and name == "Sully":
     theme = roadcolours["jank"]
     debug = True
 else:
-    conditions = box.choicebox(msg="What driving conditions do you want to try?", title="road selection",\
-    choices=["daytime", "nighttime", "foggy"])
+    conditions = box.choicebox(msg="What driving conditions \
+        do you want to try?",title="road selection", \
+            choices=["daytime", "nighttime", "foggy"])
+
     if conditions == "daytime":
         theme = roadcolours["day"]
     elif conditions == "nighttime":
         theme = roadcolours["night"]
     elif conditions == "foggy":
         theme = roadcolours["fog"]
-#If player is called "hitboxes" or "Hitboxes", or is in debug, makes the hitboxes visible
+
+#Shows hitboxes for debug, depending on name
 if name == "Hitboxes" or name == "hitboxes" or debug == True:
     drawboxes = True
 print("4.3, theme set")
 highscore = load(highscore, "highscore.json")
+
 
 
 #The game loop
@@ -265,15 +293,20 @@ while not quitgame:
     #Displaying the screen, road lanes, barriers
     screen.fill(theme["lane"])
     for x in barriers:
-        x.drawobjects(screen, colour=(theme["barrier"]), type=("road"))
+        x.drawobjects(screen, colour=(theme["barrier"]),\
+            type=("road"))
     for x in roadlines:
-        x.drawobjects(screen, colour=(theme["lines"]), type=("road"))
+        x.drawobjects(screen, colour=(theme["lines"]),\
+            type=("road"))
     for x in moveillusion:
-        x.drawobjects(screen, colour=(theme["lane"]), type=("road"))
+        x.drawobjects(screen, colour=(theme["lane"]),\
+            type=("road"))
     for x in cars:
-        x.drawobjects(screen, colour=(theme["car"]), type=("vehicle"))
+        x.drawobjects(screen, colour=(theme["car"]),\
+            type=("vehicle"))
     for x in player:
-        x.drawobjects(screen, colour=(theme["car"]), type=("vehicle"))
+        x.drawobjects(screen, colour=(theme["car"]),\
+            type=("vehicle"))
 
     for x in cars:
         x.carchange(screen)
@@ -282,7 +315,8 @@ while not quitgame:
     scoremsg1 = (f"Your score is {score[2]}, highscore:")
     scoremsg2 = (f"{highscore[2]} by {highscore[0]}")
     scoremsg = str(scoremsg1 + scoremsg2)
-    message(scoremsg, roadcolours["day"]["lines"], roadcolours["jank"]["lane"], 640, 325)
+    message(scoremsg, roadcolours["day"]["lines"], \
+        roadcolours["jank"]["lane"], 640, 325)
 
 
     #Moving the player car based on input
@@ -307,19 +341,19 @@ while not quitgame:
     #Moving the NPC cars across the screen
     for x in cars:
         x.NPCmove(screen)
-    #Moving the illusion boxes of movement across the screen
+    #Shifting illusion boxes of movement across the screen
     for x in moveillusion:
         x.NPCmove(screen)
-
+#12345678901234567892123456789312345678941234567895123456789612345678971
     #Relocating the NPCs
     #Repositioning the NPCcars once they leave the screen
     for x in cars:
         x.relocate(screen, "vehicle")
-    #Repositioning the illusion boxes of movement once they leave the screen
+    #Resetting the illusion boxes of movement
     for x in moveillusion:
         x.relocate(screen, "movinglines")
     
-    #Checking collision of the cars against the player car
+    #Checking collision of the cars against the player
     for x in cars:
         x.collcheck(pcar)
     score[2] = round(score[2], 0)
