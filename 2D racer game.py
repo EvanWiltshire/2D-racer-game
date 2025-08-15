@@ -138,7 +138,7 @@ class Objects:
             poly = pg.Rect((self.coords[0]), (self.coords[2]), 70, 44)
             #print(self.coords[4])
             screen.blit(carpngs[self.coords[4]], poly)
-        elif drawboxes == True or type != "vehicle":
+        if drawboxes == True or type != "vehicle":
             pg.draw.polygon(screen, colour, ((self.coords[0], \
                 self.coords[2]), (self.coords[1], self.coords[2]), \
                     (self.coords[1], self.coords[3]),(self.coords[0], \
@@ -159,7 +159,7 @@ class Objects:
             crash = False
             if pcar[0] >= self.coords[0] and pcar[0] <= self.coords[1]:
                 Xcoll = True
-            elif pcar[1] >= self.coords[0] and pcar[1] <= self.coords[0]:
+            elif pcar[1] >= self.coords[0] and pcar[1] <= self.coords[1]:
                 Xcoll = True
             #Y collision
             if pcar[2] >= self.coords[2] and pcar[2] <= self.coords[3]:
